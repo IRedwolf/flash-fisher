@@ -9,7 +9,7 @@ from sqlalchemy import Column, Integer, String, Boolean, Float
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.orm import relationship
 from app.libs.helper import is_isbn_or_key
-from app.models.base import Base,db
+from app.models.base import Base, db
 from flask_login import UserMixin
 from app import login_manager
 from app.spider.yushu_book import YuShuBook
@@ -18,6 +18,7 @@ from app.models.wish import Wish
 
 
 class User(UserMixin, Base):
+	__tablename__ = 'user'
 	id = Column(Integer, primary_key=True)
 	nickname = Column(String(24), nullable=False)
 	phone_number = Column(String(18), unique=True)
@@ -50,11 +51,9 @@ class User(UserMixin, Base):
 		yushu_book.search_by_isbn(isbn)
 		if not yushu_book.first:
 			return False
-		gifting = Gift.query.filter_by(uid=self.id, isbn=isbn,
-		                               launched=False).first()
-		wishing = Wish.query.filter_by(uid=self.id, isbn=isbn,
-		                               launched=False).first()
-
+		gifting = Gift.query.filter_by(uid=self.id, isbn=isbn, launched=False).first()
+		wishing = Wish.query.filter_by(uid=self.id, isbn=isbn, launched=False).first()
+		
 		if not gifting and not wishing:
 			return True
 		else:
