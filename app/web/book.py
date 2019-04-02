@@ -60,16 +60,15 @@ def book_detail(isbn):
     # 获取详情数据
     yushu_book = YuShuBook()
     yushu_book.search_by_isbn(isbn)
-    book = BookViewModel(yushu_book.first)
 
     if current_user.is_authenticated:
         if Gift.query.filter_by(uid=current_user.id, isbn=isbn,
                                 launched=False).first():
             has_in_gifts = True
-
         if Wish.query.filter_by(uid=current_user.id, isbn=isbn,
                                 launched=False):
             has_in_wishes = True
+    book = BookViewModel(yushu_book.first)
 
     trade_gifts = Gift.query.filter_by(isbn=isbn, launched=False).all()
     trade_wishes = Wish.query.filter_by(isbn=isbn, launched=False).all()
