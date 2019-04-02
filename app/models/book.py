@@ -27,7 +27,6 @@ class Book(Base):
     isbn = Column(String(15), nullable=False, unique=True)
     summary = Column(String(1000))
     image = Column(String(50))
-    extend_existing = True
 
     def sample(self):
         pass
