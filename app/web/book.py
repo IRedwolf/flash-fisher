@@ -66,7 +66,7 @@ def book_detail(isbn):
                                 launched=False).first():
             has_in_gifts = True
         if Wish.query.filter_by(uid=current_user.id, isbn=isbn,
-                                launched=False):
+                                launched=False).first():
             has_in_wishes = True
     book = BookViewModel(yushu_book.first)
 
