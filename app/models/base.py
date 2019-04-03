@@ -29,7 +29,7 @@ class Query(BaseQuery):
         return super(Query, self).filter_by(**kwargs)
 
 
-db = SQLAlchemy(query_class=Query)
+db = SQLAlchemy(query_class=Query, use_native_unicode='utf8')
 
 
 class Base(db.Model):

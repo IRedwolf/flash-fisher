@@ -43,7 +43,7 @@ class Drift(Base):
     gift_id = Column(Integer)
     gifter_nickname = Column(String(20))
 
-    _pending = Column('pending', SmallInteger, default=1)
+    pending = Column('pending', SmallInteger, default=1)
     # gift_id = Column(Integer, ForeignKey('gift.id'))
     # gift = relationship('Gift')
 
