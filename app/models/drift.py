@@ -1,5 +1,5 @@
 #!usr/bin/env python
-#-*- coding:utf-8 _*-
+# -*- coding:utf-8 _*-
 """
 @author:tingeng
 @file: drift.py
@@ -9,6 +9,8 @@
 # from app.libs.enums import PendingStatus
 from sqlalchemy import Column, String, Integer, ForeignKey, SmallInteger
 from sqlalchemy.orm import relationship
+
+from app.libs.enums import PendingStatus
 from app.models.base import Base
 
 
@@ -43,13 +45,18 @@ class Drift(Base):
     gift_id = Column(Integer)
     gifter_nickname = Column(String(20))
 
-    pending = Column('pending', SmallInteger, default=1)
+    _pending = Column('pending', SmallInteger, default=1)
+
     # gift_id = Column(Integer, ForeignKey('gift.id'))
     # gift = relationship('Gift')
 
-    # @property
-    # def pending(self):
-    #     return PendingStatus(self._pending)
+    @property
+    def pending(self):
+        return PendingStatus(self._pending)
+
+    @pending.setter
+    def pending(self, status):
+        self._pending = status.value
     #
     # @pending.setter
     # def pending(self, status):

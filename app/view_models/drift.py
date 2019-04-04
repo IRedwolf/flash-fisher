@@ -5,16 +5,17 @@
 @file: drift.py
 @time: 2019/04/04
 """
-from flask_login import current_user
-
 from app.libs.enums import PendingStatus
 
 
 class DriftCollection:
     def __init__(self, drifts, current_user_id):
         self.data = []
-
-        self.data = self.__parse(drifts, current_user_id)
+        self.__parse(drifts, current_user_id)
+        '''
+        此处不是使用教程中 self.data = self.__parse(drifts, current_user_id)
+        __parse 函数无返回值。。。
+        '''
 
     def __parse(self, drifts, current_user_id):
         for drift in drifts:
@@ -25,9 +26,7 @@ class DriftCollection:
 class DriftViewModel:
     def __init__(self, drift, current_user_id):
         self.data = {}
-
         self.data = self.__parse(drift, current_user_id)
-        pass
 
     @staticmethod
     def requester_or_gifter(drifter, current_user_id):
@@ -47,8 +46,7 @@ class DriftViewModel:
             'book_author': drift.book_author,
             'book_img': drift.book_img,
             'date': drift.create_datetime.strftime('%Y-%m-%d'),
-            'operator': drift.requester_nickname if you_are != 'requester' \
-                else drift.gifter_nickname,
+            'operator': drift.requester_nickname if you_are != 'requester' else drift.gifter_nickname,
             'message': drift.message,
             'address': drift.address,
             'status_str': pending_status,
